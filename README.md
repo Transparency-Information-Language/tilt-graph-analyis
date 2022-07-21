@@ -1,3 +1,13 @@
+# Analysing the TILT Hub with Graph Data Science
+
+To Dos:
+- Decide on Graph Structure
+- Update Schema
+  - Fix syntax with Relations in Schema
+ 
+
+---------------------------------------------------------------------------
+
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://grandstack.io/deploy-starter-netlify) [![Deploy to Vercel](https://vercel.com/button)](https://grandstack.io/deploy-starter-vercel) [![Provision Neo4j](https://grandstack.io/img/provision-neo4j.png)](https://sandbox.neo4j.com/?usecase=blank-sandbox)
 
 # GRANDstack Starter
