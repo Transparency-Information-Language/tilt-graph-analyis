@@ -1,0 +1,49 @@
+
+
+type DataProtectionOfficer {
+    name: String
+    address: String
+    email: String
+    phone: String
+    lastUpdate: String
+}
+
+type AdServer {
+    url: String
+}
+
+type Purpose {
+    id: Int
+    name: String
+    description: String
+    descriptionLegal: String
+}
+
+type SpecialPurpose {
+    id: Int
+    name: String
+    description: String
+    descriptionLegal: String
+}
+
+type Feature {
+    id: Int
+    name: String
+    description: String
+    descriptionLegal: String
+}
+
+type SpecialFeature {
+    id: Int
+    name: String
+    description: String
+    descriptionLegal: String
+}
+
+
+
+
+type PersonalData {
+    type: String
+    description: String
+}
