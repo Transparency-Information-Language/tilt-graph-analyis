@@ -48,7 +48,24 @@ print('Purposes:')
 tilt_nodes = []
 tilt_edges = []
 
-for i in tilt:
+def create_node(elem, parent):
+
+    while isinstance(elem, str) == False: 
+        i += 1
+        
+        create_node(elem[i], elem)
+
+    return f"create{}"
+
+
+
+for entry in tilt: 
+
+    while 
+
+    
+
+"""for i in tilt:
     #print(i)
     #record node
     tilt_nodes.append([str.lower(i['meta']['name']), str.lower(i['meta']['url'])])
@@ -78,7 +95,7 @@ for i in tilt:
         print(client_response)
 
 
-"""for i in tqdm(range(1, len(purposes) + 1)):
+for i in tqdm(range(1, len(purposes) + 1)):
     p = purposes['%s' % (i)]
     description = p['description'].replace('"', '\\"').replace(':', '\:"')
     descriptionLegal = p['descriptionLegal'].replace('"', '\\"').replace('\n', '')
@@ -88,4 +105,3 @@ for i in tilt:
     client.execute(query)
     i = i + 1
 """
-

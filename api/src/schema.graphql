@@ -30,12 +30,15 @@ type controller {
     controllOf: meta @relationship(type: "has_controller", direction: IN)
     representatedBy: [representative] @relationship(type: "has_representative", direction: OUT)
 }
+
+
+union representativeOf = controller | recipient
+
 type representative {
       name: String
       email: String
       phone: String
-      representedController: controller @relationship(type: "has_representative", direction: IN)
-      representedRecipient: recipient @relationship(type: "has_representative", direction: IN)
+      representativeOf: representativeOf @relationship(type: "has_representative", direction: IN)
 }
 
 type dataProtectionOfficer {
