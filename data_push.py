@@ -8,6 +8,7 @@ import requests
 import json
 
 import time
+from sqlalchemy import delete
 from tqdm import tqdm
 
 # console = Console()
@@ -42,6 +43,7 @@ json_file = open('/Users/johannes/Desktop/TU/playground/tilt')
 tilt = json.load(json_file)
 
 print('Purposes:')
+
 
 tilt_nodes = []
 tilt_edges = []
