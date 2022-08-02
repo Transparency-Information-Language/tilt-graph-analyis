@@ -1,3 +1,20 @@
+type tilt { 
+    meta: [meta] @relationship(type: "has_meta", direction: OUT)
+    controller: [controller] @relationship(type: "has_controller", direction: OUT)
+    dataProtectionOfficer: [dataProtectionOfficer] @relationship(type: "has_dataProtectionOfficer", direction: OUT) 
+    dataDisclosed: [dataDisclosed] @relationship(type: "has_dataDisclosed", direction: OUT)
+    changesOfPurpose: [changesOfPurpose] @relationship(type: "has_changesOfPurpose", direction: OUT)
+    automatedDecisionMaking: [automatedDecisionMaking] @relationship(type: "has_automatedDecisionMaking", direction: OUT)
+    rightToComplain: [rightToComplain] @relationship(type: "has_rightToComplain", direction: OUT)
+    rightToDataPortability: [rightToDataPortability] @relationship(type: "has_rightToDataPortability", direction: OUT)
+    rightToWithdrawConsent: [rightToWithdrawConsent] @relationship(type: "has_rightToWithdrawConsent", direction: OUT)
+    rightToRectificationOrDeletion: [rightToRectificationOrDeletion] @relationship(type: "has_rightToRectificationOrDeletion", direction: OUT)
+    rightToInformation: [rightToInformation] @relationship(type: "has_rightToInformation", direction: OUT)
+    sources: [sources] @relationship(type: "has_sources", direction: OUT)
+    accessAndDataPortability: [accessAndDataPortability] @relationship(type: "has_accessAndDataPortability", direction: OUT)
+    thirdCountryTransfer: [thirdCountryTransfer] @relationship(type: "has_thirdCountryTransfer", direction: OUT)
+}
+
 type meta {
     _id: String
     name: String
@@ -8,18 +25,6 @@ type meta {
     status: String
     url: String
     _hash: String
-    controlledBy: [controller] @relationship(type: "has_controller", direction: OUT)
-    officer: [dataProtectionOfficer] @relationship(type: "has_dataProtectionOfficer", direction: OUT) 
-    dataDisclosed: [dataDisclosed] @relationship(type: "has_dataDisclosed", direction: OUT)
-    changesOfPurposes: changesOfPurpose @relationship(type: "has_changesOfPurpose", direction: OUT)
-    automatedDecisionMaking: automatedDecisionMaking @relationship(type: "has_automatedDecisionMaking", direction: OUT)
-    rightToComplain: rightToComplain @relationship(type: "has_rightToComplain", direction: OUT)
-    rightToDataPortability: rightToDataPortability @relationship(type: "has_rightToDataPortability", direction: OUT)
-    rightToWithdrawConsent: rightToWithdrawConsent @relationship(type: "has_rightToWithdrawConsent", direction: OUT)
-    rightToRectificationOrDeletion: rightToRectificationOrDeletion @relationship(type: "has_rightToRectificationOrDeletion", direction: OUT)
-    rightToInformation: rightToInformation @relationship(type: "has_rightToInformation", direction: OUT)
-    sourcesFrom: sources @relationship(type: "has_sources", direction: OUT)
-    accessAndDataPortability: accessAndDataPortability @relationship(type: "has_accessAndDataPortability", direction: OUT)
 }
 
 type controller {
@@ -27,18 +32,18 @@ type controller {
     division: String
     address: String
     country: String
-    controllOf: meta @relationship(type: "has_controller", direction: IN)
-    representatedBy: [representative] @relationship(type: "has_representative", direction: OUT)
+    controllerOf:[tilt] @relationship(type: "has_controller", direction: IN)
+    representative: [representative] @relationship(type: "has_representative", direction: OUT)
 }
 
 
-union representativeOf = controller | recipient
+union representativeOf = controller | recipients
 
 type representative {
       name: String
       email: String
       phone: String
-      representativeOf: representativeOf @relationship(type: "has_representative", direction: IN)
+      representativeOf: [representativeOf] @relationship(type: "has_representative", direction: IN)
 }
 
 type dataProtectionOfficer {
@@ -47,47 +52,47 @@ type dataProtectionOfficer {
     country: String
     email: String
     phone: String
-    officerOf: meta @relationship(type: "has_dataProtectionOfficer", direction: IN)
+    officerOf:[tilt] @relationship(type: "has_dataProtectionOfficer", direction: IN)
   }
 
 
 type dataDisclosed {
     _id: String
     category: String
-    dataDisclosedOf: meta @relationship(type: "has_dataDisclosed", direction: IN)
-    purposes: [purpose] @relationship(type: "has_purpose", direction: OUT)
-    legalBases: [legalBase] @relationship(type: "has_legalBase", direction: OUT)
-    legitimateInterests: [legitimateInterest] @relationship(type: "has_legitimateInterest", direction: OUT)
-    recipients: [recipient] @relationship(type: "has_recipient", direction: OUT)
-    nonDisclosures: nonDisclosure @relationship(type: "has_nonDisclosure", direction: OUT)
-    storageOf: storage @relationship(type: "has_storage", direction: OUT)
+    dataDisclosedOf:[tilt] @relationship(type: "has_dataDisclosed", direction: IN)
+    purposes: [purposes] @relationship(type: "has_purpose", direction: OUT)
+    legalBases: [legalBases] @relationship(type: "has_legalBase", direction: OUT)
+    legitimateInterests: [legitimateInterests] @relationship(type: "has_legitimateInterest", direction: OUT)
+    recipients: [recipients] @relationship(type: "has_recipients", direction: OUT)
+    nonDisclosures: [nonDisclosure] @relationship(type: "has_nonDisclosure", direction: OUT)
+    storageOf: [storage] @relationship(type: "has_storage", direction: OUT)
 }
 
-type purpose {
+type purposes {
     purpose: String
     description: String
     purposeOf: [dataDisclosed] @relationship(type: "has_purpose", direction: IN)
 }
 
-type legalBase {
+type legalBases {
     reference: String
     description: String
-    legalBaseOf: [dataDisclosed] @relationship(type: "has_legalBase", direction: IN)
+    legalBasesOf: [dataDisclosed] @relationship(type: "has_legalBases", direction: IN)
 }
 
-type legitimateInterest {
+type legitimateInterests {
     exists: String
     reasoning: String
     legitimateInterestOf: [dataDisclosed] @relationship(type: "has_legitimateInterest", direction: IN)
 }
 
-## does it make sense to make these the same type as a meta object? 
-type recipient {
+## does it make sense to make these the same type as a[meta]object? 
+type recipients {
     name: String
     division: String
     address: String
     country: String
-    recipientOf: [dataDisclosed] @relationship(type: "has_recipient", direction: IN)
+    recipientsOf: [dataDisclosed] @relationship(type: "has_recipients", direction: IN)
     representative: [representative] @relationship(type: "has_representative", direction: OUT)
     name: String
     email: String
@@ -99,14 +104,14 @@ type changesOfPurpose {
     plannedDateOfChange: String
     urlOfNewVersion: String
     affectedDataCategories: [String]
-    changesOfPurposeOf: meta @relationship(type: "has_changesOfPurpose", direction: IN)
+    changesOfPurposeOf: [tilt] @relationship(type: "has_changesOfPurpose", direction: IN)
 }
 
 type automatedDecisionMaking {
-    inUse: Boolean
+    inUse: String
     logicInvolved: String
     scopeAndIntendedEffects: String
-    automatedDecisionMakingOf: meta @relationship(type: "has_automatedDecisionMaking", direction: IN)
+    automatedDecisionMakingOf: [tilt] @relationship(type: "has_automatedDecisionMaking", direction: IN)
 }
 
 type supervisoryAuthority {
@@ -118,41 +123,41 @@ type supervisoryAuthority {
     supervisoryAuthorityOf: [rightToComplain] @relationship(type: "has_supervisoryAuthority", direction: IN)
 }
 type rightToComplain {
-    available: Boolean
+    available: String
     description: String
     url: String
     email: String
-    rightToComplainOf: meta @relationship(type: "has_rightToComplain", direction: IN)
-    supervisoryAuthority: supervisoryAuthority @relationship(type: "has_supervisoryAuthority", direction: OUT)
+    rightToComplainOf:[tilt] @relationship(type: "has_rightToComplain", direction: IN)
+    supervisoryAuthority: [supervisoryAuthority] @relationship(type: "has_supervisoryAuthority", direction: OUT)
     identificationEvidences: [String]
 }
 type rightToWithdrawConsent {
-    rightToWithdrawConsentOf: meta @relationship(type: "has_rightToWithdrawConsent", direction: IN)
-    available: Boolean
+    rightToWithdrawConsentOf:[tilt] @relationship(type: "has_rightToWithdrawConsent", direction: IN)
+    available: String
     description: String
     url: String
     email: String
     identificationEvidences: [String]
 }
 type rightToDataPortability {
-    rightToDataPortabilityOf: meta @relationship(type: "has_rightToDataPortability", direction: IN)
-    available: Boolean
+    rightToDataPortabilityOf:[tilt] @relationship(type: "has_rightToDataPortability", direction: IN)
+    available: String
     description: String
     url: String
     email: String
     identificationEvidences: [String]
 }
 type rightToRectificationOrDeletion {
-    rightToRectificationOrDeletionOf: meta @relationship(type: "has_rightToRectificationOrDeletion", direction: IN)
-    available: Boolean
+    rightToRectificationOrDeletionOf:[tilt] @relationship(type: "has_rightToRectificationOrDeletion", direction: IN)
+    available: String
     description: String
     url: String
     email: String
     identificationEvidences: [String]
 }
 type rightToInformation {
-    rightToInformationOf: meta @relationship(type: "has_rightToInformation", direction: IN)
-    available: Boolean
+    rightToInformationOf:[tilt] @relationship(type: "has_rightToInformation", direction: IN)
+    available: String
     description: String
     url: String
     email: String
@@ -161,58 +166,59 @@ type rightToInformation {
 type sources {
     description: String
     url: String
-    publiclyAvailable: Boolean
-    sourcesFor: meta @relationship(type: "has_sources", direction: IN)
+    publiclyAvailable: String
+    sourcesFor:[tilt] @relationship(type: "has_sources", direction: IN)
 }
 
 type administrativeFee {
-    amount: Int
+    amount: String
     currency: String
-    administrativeFeeOf: accessAndDataPortability @relationship(type: "has_administrativeFee", direction: IN)
+    administrativeFeeOf: [accessAndDataPortability] @relationship(type: "has_administrativeFee", direction: IN)
 }
 
 type accessAndDataPortability {
-    accessAndDataPortabilityOf: meta @relationship(type: "has_accessAndDataPortability", direction: IN)
-    available: Boolean
+    accessAndDataPortabilityOf:[tilt] @relationship(type: "has_accessAndDataPortability", direction: IN)
+    available: String
     description: String
     url: String
     email: String
     dataFormats: [String]
-    administrativeFee: administrativeFee @relationship(type: "has_administrativeFee", direction: OUT)
+    administrativeFee: [administrativeFee] @relationship(type: "has_administrativeFee", direction: OUT)
     identificationEvidences: [String]
 }
 type standardDataProtectionClause {
-    available: Boolean
+    available: String
     description: String
-    standardDataProtectionClauseOf: thirdCountryTransfer @relationship(type: "has_standardDataProtectionClause", direction: IN)
+    standardDataProtectionClauseOf: [thirdCountryTransfer] @relationship(type: "has_standardDataProtectionClause", direction: IN)
 }
 type presenceOfEnforceableRightsAndEffectiveRemedies {
-    presenceOfEnforceableRightsAndEffectiveRemediesOf: thirdCountryTransfer @relationship(type: "has_presenceOfEnforceableRightsAndEffectiveRemedies", direction: IN)
-    available: Boolean
+    presenceOfEnforceableRightsAndEffectiveRemediesOf: [thirdCountryTransfer] @relationship(type: "has_presenceOfEnforceableRightsAndEffectiveRemedies", direction: IN)
+    available: String
     description: String
 }
 type appropriateGuarantees {
-    appropriateGuaranteesOf: thirdCountryTransfer @relationship(type: "has_appropriateGuarantees", direction: IN)
-    available: Boolean
+    appropriateGuaranteesOf: [thirdCountryTransfer] @relationship(type: "has_appropriateGuarantees", direction: IN)
+    available: String
     description: String
 }
 type adequacyDecision {
-    adequacyDecision: thirdCountryTransfer @relationship(type: "has_adequacyDecision", direction: IN)
-    available: Boolean
+    adequacyDecision: [thirdCountryTransfer] @relationship(type: "has_adequacyDecision", direction: IN)
+    available: String
     description: String
 }
 type thirdCountryTransfer {
     country: String
-    standardDataProtectionClause: standardDataProtectionClause @relationship(type: "has_standardDataProtectionClause", direction: OUT)
-    presenceOfEnforceableRightsAndEffectiveRemedies: presenceOfEnforceableRightsAndEffectiveRemedies @relationship(type: "has_presenceOfEnforceableRightsAndEffectiveRemedies", direction: OUT)
-    appropriateGuarantees: appropriateGuarantees @relationship(type: "has_appropriateGuarantees", direction: OUT)
-    adequacyDecision: adequacyDecision @relationship(type: "has_adequacyDecision", direction: OUT)
+    thirdCountryTransferOf: [tilt] @relationship(type: "has_thirdCountryTransfer", direction: IN)
+    standardDataProtectionClause: [standardDataProtectionClause] @relationship(type: "has_standardDataProtectionClause", direction: OUT)
+    presenceOfEnforceableRightsAndEffectiveRemedies: [presenceOfEnforceableRightsAndEffectiveRemedies] @relationship(type: "has_presenceOfEnforceableRightsAndEffectiveRemedies", direction: OUT)
+    appropriateGuarantees: [appropriateGuarantees] @relationship(type: "has_appropriateGuarantees", direction: OUT)
+    adequacyDecision: [adequacyDecision] @relationship(type: "has_adequacyDecision", direction: OUT)
 }
 type nonDisclosure {
-    nonDisclosureOf: dataDisclosed @relationship(type: "has_nonDisclosure", direction: IN)
-    legalRequirement: Boolean
-    contractualRegulation: Boolean
-    obligationToProvide: Boolean
+    nonDisclosureOf: [dataDisclosed] @relationship(type: "has_nonDisclosure", direction: IN)
+    legalRequirement: String
+    contractualRegulation: String
+    obligationToProvide: String
     consequences: String
 }
 type temporal {
@@ -221,7 +227,7 @@ type temporal {
     ttl: String
 }
 type storage {
-    storageOf: dataDisclosed @relationship(type: "has_storage", direction: IN)
+    storageOf: [dataDisclosed] @relationship(type: "has_storage", direction: IN)
     temporal: [temporal] @relationship(type: "has_temporal", direction: OUT)
     aggregationFunction: String
     legalBasisConditional: [String]
