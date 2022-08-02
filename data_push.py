@@ -48,23 +48,6 @@ print('Purposes:')
 tilt_nodes = []
 tilt_edges = []
 
-def create_node(elem, parent):
-
-    while isinstance(elem, str) == False: 
-        i += 1
-        
-        create_node(elem[i], elem)
-
-    return f"create{}"
-
-
-
-for entry in tilt: 
-
-    while 
-
-    
-
 """for i in tilt:
     #print(i)
     #record node
