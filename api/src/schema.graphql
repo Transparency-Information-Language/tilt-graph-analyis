@@ -1,4 +1,5 @@
 type tilt { 
+    _id: [_id] @relationship(type: "has__id", direction: OUT)
     meta: [meta] @relationship(type: "has_meta", direction: OUT)
     controller: [controller] @relationship(type: "has_controller", direction: OUT)
     dataProtectionOfficer: [dataProtectionOfficer] @relationship(type: "has_dataProtectionOfficer", direction: OUT) 
@@ -12,7 +13,8 @@ type tilt {
     rightToInformation: [rightToInformation] @relationship(type: "has_rightToInformation", direction: OUT)
     sources: [sources] @relationship(type: "has_sources", direction: OUT)
     accessAndDataPortability: [accessAndDataPortability] @relationship(type: "has_accessAndDataPortability", direction: OUT)
-    thirdCountryTransfer: [thirdCountryTransfer] @relationship(type: "has_thirdCountryTransfer", direction: OUT)
+    thirdCountryTransfers: [thirdCountryTransfers] @relationship(type: "has_thirdCountryTransfers", direction: OUT)
+    _etag: [_etag] @relationship(type: "has__etag", direction: OUT)
 }
 
 type meta {
@@ -25,6 +27,7 @@ type meta {
     status: String
     url: String
     _hash: String
+    metaOf: [tilt] @relationship(type: "has_meta", direction: IN)
 }
 
 type controller {
@@ -64,8 +67,8 @@ type dataDisclosed {
     legalBases: [legalBases] @relationship(type: "has_legalBase", direction: OUT)
     legitimateInterests: [legitimateInterests] @relationship(type: "has_legitimateInterest", direction: OUT)
     recipients: [recipients] @relationship(type: "has_recipients", direction: OUT)
-    nonDisclosures: [nonDisclosure] @relationship(type: "has_nonDisclosure", direction: OUT)
-    storageOf: [storage] @relationship(type: "has_storage", direction: OUT)
+    nonDisclosure: [nonDisclosure] @relationship(type: "has_nonDisclosure", direction: OUT)
+    storage: [storage] @relationship(type: "has_storage", direction: OUT)
 }
 
 type purposes {
@@ -94,9 +97,9 @@ type recipients {
     country: String
     recipientsOf: [dataDisclosed] @relationship(type: "has_recipients", direction: IN)
     representative: [representative] @relationship(type: "has_representative", direction: OUT)
-    name: String
     email: String
     phone: String
+    category: String
 }
 
 type changesOfPurpose {
@@ -164,9 +167,12 @@ type rightToInformation {
     identificationEvidences: [String]
 }
 type sources {
+    _id: String
+    dataCategory: String
     description: String
     url: String
     publiclyAvailable: String
+    sources: [sources] @relationship(type: "has_sources", direction: OUT)
     sourcesFor:[tilt] @relationship(type: "has_sources", direction: IN)
 }
 
@@ -189,26 +195,26 @@ type accessAndDataPortability {
 type standardDataProtectionClause {
     available: String
     description: String
-    standardDataProtectionClauseOf: [thirdCountryTransfer] @relationship(type: "has_standardDataProtectionClause", direction: IN)
+    standardDataProtectionClauseOf: [thirdCountryTransfers] @relationship(type: "has_standardDataProtectionClause", direction: IN)
 }
 type presenceOfEnforceableRightsAndEffectiveRemedies {
-    presenceOfEnforceableRightsAndEffectiveRemediesOf: [thirdCountryTransfer] @relationship(type: "has_presenceOfEnforceableRightsAndEffectiveRemedies", direction: IN)
+    presenceOfEnforceableRightsAndEffectiveRemediesOf: [thirdCountryTransfers] @relationship(type: "has_presenceOfEnforceableRightsAndEffectiveRemedies", direction: IN)
     available: String
     description: String
 }
 type appropriateGuarantees {
-    appropriateGuaranteesOf: [thirdCountryTransfer] @relationship(type: "has_appropriateGuarantees", direction: IN)
+    appropriateGuaranteesOf: [thirdCountryTransfers] @relationship(type: "has_appropriateGuarantees", direction: IN)
     available: String
     description: String
 }
 type adequacyDecision {
-    adequacyDecision: [thirdCountryTransfer] @relationship(type: "has_adequacyDecision", direction: IN)
+    adequacyDecision: [thirdCountryTransfers] @relationship(type: "has_adequacyDecision", direction: IN)
     available: String
     description: String
 }
-type thirdCountryTransfer {
+type thirdCountryTransfers {
     country: String
-    thirdCountryTransferOf: [tilt] @relationship(type: "has_thirdCountryTransfer", direction: IN)
+    thirdCountryTransfersOf: [tilt] @relationship(type: "has_thirdCountryTransfers", direction: IN)
     standardDataProtectionClause: [standardDataProtectionClause] @relationship(type: "has_standardDataProtectionClause", direction: OUT)
     presenceOfEnforceableRightsAndEffectiveRemedies: [presenceOfEnforceableRightsAndEffectiveRemedies] @relationship(type: "has_presenceOfEnforceableRightsAndEffectiveRemedies", direction: OUT)
     appropriateGuarantees: [appropriateGuarantees] @relationship(type: "has_appropriateGuarantees", direction: OUT)
@@ -234,3 +240,10 @@ type storage {
     purposeConditional: [String]
 }
 
+type _id {
+    oid: String
+}
+
+type _etag {
+    oid: String
+}

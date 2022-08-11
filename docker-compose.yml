@@ -24,20 +24,23 @@ services:
       - GRAPHQL_LISTEN_PORT=4001
       - GRAPHQL_URI=http://api:4001/graphql
 
+    #volumes:
+    #  - ./api/src/:/app/src/:rw
+
     links:
       - neo4j
     depends_on:
       - neo4j
 
-  ui:
-    build: ./web-react
-    ports:
-      - 3000:3000
-    environment:
-      - CI=true
-      - REACT_APP_GRAPHQL_URI=/graphql
-      - PROXY=http://api:4001/graphql
-    links:
-      - api
-    depends_on:
-      - api
+  #ui:
+  #  build: ./web-react
+   # ports:
+   #   - 3000:3000
+    #environment:
+     # - CI=true
+      #- REACT_APP_GRAPHQL_URI=/graphql
+      #- PROXY=http://api:4001/graphql
+    #links:
+     # - api
+    #depends_on:
+     # - api
