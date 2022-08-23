@@ -1,0 +1,9 @@
+# create distance relationship nodes. 
+
+match (m:meta), (r:recipients)
+where r.name <> "None"
+and apoc.text.sorensenDiceSimilarity(apoc.text.clean(m.name), apoc.text.clean(r.name), 'de') > 0.8 ## change algorithm here
+merge (m)-[c:has_sorensen]->(r) ## change name here 
+return (m)-[c:has_sorensen]->(r) ## and here 
+
+
