@@ -37,6 +37,7 @@ type controller {
     country: String
     controllerOf:[tilt] @relationship(type: "has_controller", direction: IN)
     representative: [representative] @relationship(type: "has_representative", direction: OUT)
+    sector: String
 }
 
 
