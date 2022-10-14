@@ -15,6 +15,7 @@ type tilt {
     accessAndDataPortability: [accessAndDataPortability] @relationship(type: "has_accessAndDataPortability", direction: OUT)
     thirdCountryTransfers: [thirdCountryTransfers] @relationship(type: "has_thirdCountryTransfers", direction: OUT)
     _etag: [_etag] @relationship(type: "has__etag", direction: OUT)
+    _comment: String
 }
 
 type meta {
@@ -28,6 +29,7 @@ type meta {
     url: String
     _hash: String
     metaOf: [tilt] @relationship(type: "has_meta", direction: IN)
+    _comment: String
 }
 
 type controller {
@@ -38,6 +40,7 @@ type controller {
     controllerOf:[tilt] @relationship(type: "has_controller", direction: IN)
     representative: [representative] @relationship(type: "has_representative", direction: OUT)
     sector: String
+    _comment: String
 }
 
 
@@ -47,7 +50,10 @@ type representative {
       name: String
       email: String
       phone: String
+      address: String
       representativeOf: [representativeOf] @relationship(type: "has_representative", direction: IN)
+      _comment: String
+      contact_form: String
 }
 
 type dataProtectionOfficer {
@@ -56,7 +62,9 @@ type dataProtectionOfficer {
     country: String
     email: String
     phone: String
+    url: String
     officerOf:[tilt] @relationship(type: "has_dataProtectionOfficer", direction: IN)
+    _comment: String
   }
 
 
@@ -70,24 +78,31 @@ type dataDisclosed {
     recipients: [recipients] @relationship(type: "has_recipients", direction: OUT)
     nonDisclosure: [nonDisclosure] @relationship(type: "has_nonDisclosure", direction: OUT)
     storage: [storage] @relationship(type: "has_storage", direction: OUT)
+    subcategories: [String]
+    description: String
+    supercategory: String
+    _comment: String
 }
 
 type purposes {
     purpose: String
     description: String
     purposeOf: [dataDisclosed] @relationship(type: "has_purpose", direction: IN)
+    _comment: String
 }
 
 type legalBases {
     reference: String
     description: String
     legalBasesOf: [dataDisclosed] @relationship(type: "has_legalBases", direction: IN)
+    _comment: String
 }
 
 type legitimateInterests {
     exists: String
     reasoning: String
     legitimateInterestOf: [dataDisclosed] @relationship(type: "has_legitimateInterest", direction: IN)
+    _comment: String
 }
 
 ## does it make sense to make these the same type as a[meta]object? 
@@ -101,6 +116,7 @@ type recipients {
     email: String
     phone: String
     category: String
+    _comment: String
 }
 
 type changesOfPurpose {
@@ -109,6 +125,7 @@ type changesOfPurpose {
     urlOfNewVersion: String
     affectedDataCategories: [String]
     changesOfPurposeOf: [tilt] @relationship(type: "has_changesOfPurpose", direction: IN)
+    _comment: String
 }
 
 type automatedDecisionMaking {
@@ -116,6 +133,7 @@ type automatedDecisionMaking {
     logicInvolved: String
     scopeAndIntendedEffects: String
     automatedDecisionMakingOf: [tilt] @relationship(type: "has_automatedDecisionMaking", direction: IN)
+    _comment: String
 }
 
 type supervisoryAuthority {
@@ -124,7 +142,9 @@ type supervisoryAuthority {
     country: String
     email: String
     phone: String
+    url: String
     supervisoryAuthorityOf: [rightToComplain] @relationship(type: "has_supervisoryAuthority", direction: IN)
+    _comment: String
 }
 type rightToComplain {
     available: String
@@ -134,6 +154,7 @@ type rightToComplain {
     rightToComplainOf:[tilt] @relationship(type: "has_rightToComplain", direction: IN)
     supervisoryAuthority: [supervisoryAuthority] @relationship(type: "has_supervisoryAuthority", direction: OUT)
     identificationEvidences: [String]
+    _comment: String
 }
 type rightToWithdrawConsent {
     rightToWithdrawConsentOf:[tilt] @relationship(type: "has_rightToWithdrawConsent", direction: IN)
@@ -142,6 +163,7 @@ type rightToWithdrawConsent {
     url: String
     email: String
     identificationEvidences: [String]
+    _comment: String
 }
 type rightToDataPortability {
     rightToDataPortabilityOf:[tilt] @relationship(type: "has_rightToDataPortability", direction: IN)
@@ -150,6 +172,7 @@ type rightToDataPortability {
     url: String
     email: String
     identificationEvidences: [String]
+    _comment: String
 }
 type rightToRectificationOrDeletion {
     rightToRectificationOrDeletionOf:[tilt] @relationship(type: "has_rightToRectificationOrDeletion", direction: IN)
@@ -158,6 +181,7 @@ type rightToRectificationOrDeletion {
     url: String
     email: String
     identificationEvidences: [String]
+    _comment: String
 }
 type rightToInformation {
     rightToInformationOf:[tilt] @relationship(type: "has_rightToInformation", direction: IN)
@@ -166,21 +190,25 @@ type rightToInformation {
     url: String
     email: String
     identificationEvidences: [String]
+    _comment: String
 }
 type sources {
     _id: String
     dataCategory: String
+    category: String 
     description: String
     url: String
     publiclyAvailable: String
     sources: [sources] @relationship(type: "has_sources", direction: OUT)
     sourcesFor:[tilt] @relationship(type: "has_sources", direction: IN)
+    _comment: String
 }
 
 type administrativeFee {
     amount: String
     currency: String
     administrativeFeeOf: [accessAndDataPortability] @relationship(type: "has_administrativeFee", direction: IN)
+    _comment: String
 }
 
 type accessAndDataPortability {
@@ -192,26 +220,31 @@ type accessAndDataPortability {
     dataFormats: [String]
     administrativeFee: [administrativeFee] @relationship(type: "has_administrativeFee", direction: OUT)
     identificationEvidences: [String]
+    _comment: String
 }
 type standardDataProtectionClause {
     available: String
     description: String
     standardDataProtectionClauseOf: [thirdCountryTransfers] @relationship(type: "has_standardDataProtectionClause", direction: IN)
+    _comment: String
 }
 type presenceOfEnforceableRightsAndEffectiveRemedies {
     presenceOfEnforceableRightsAndEffectiveRemediesOf: [thirdCountryTransfers] @relationship(type: "has_presenceOfEnforceableRightsAndEffectiveRemedies", direction: IN)
     available: String
     description: String
+    _comment: String
 }
 type appropriateGuarantees {
     appropriateGuaranteesOf: [thirdCountryTransfers] @relationship(type: "has_appropriateGuarantees", direction: IN)
     available: String
     description: String
+    _comment: String
 }
 type adequacyDecision {
     adequacyDecision: [thirdCountryTransfers] @relationship(type: "has_adequacyDecision", direction: IN)
     available: String
     description: String
+    _comment: String
 }
 type thirdCountryTransfers {
     country: String
@@ -220,6 +253,7 @@ type thirdCountryTransfers {
     presenceOfEnforceableRightsAndEffectiveRemedies: [presenceOfEnforceableRightsAndEffectiveRemedies] @relationship(type: "has_presenceOfEnforceableRightsAndEffectiveRemedies", direction: OUT)
     appropriateGuarantees: [appropriateGuarantees] @relationship(type: "has_appropriateGuarantees", direction: OUT)
     adequacyDecision: [adequacyDecision] @relationship(type: "has_adequacyDecision", direction: OUT)
+    _comment: String
 }
 type nonDisclosure {
     nonDisclosureOf: [dataDisclosed] @relationship(type: "has_nonDisclosure", direction: IN)
@@ -227,18 +261,22 @@ type nonDisclosure {
     contractualRegulation: String
     obligationToProvide: String
     consequences: String
+    _comment: String
 }
 type temporal {
     temporal: storage @relationship(type: "has_temporal", direction: IN)
     description: String
     ttl: String
+    _comment: String
 }
 type storage {
     storageOf: [dataDisclosed] @relationship(type: "has_storage", direction: IN)
     temporal: [temporal] @relationship(type: "has_temporal", direction: OUT)
     aggregationFunction: String
+    description: String
     legalBasisConditional: [String]
     purposeConditional: [String]
+    _comment: String
 }
 
 type _id {
