@@ -1,4 +1,4 @@
-FROM neo4j:community
+FROM neo4j:4.4.12-community
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y curl
 
