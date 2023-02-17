@@ -17,7 +17,7 @@ Afterwards, you can also access the instance through [neo4j Desktop](https://neo
 
 ## Content
 
-There are two Jupyter Notebooks [tilt_to_neo.ipynb](https://github.com/Transparency-Information-Language/tilt-graph-analyis/blob/main/tilt_to_neo4j.ipynb) and [fake_data](https://github.com/Transparency-Information-Language/tilt-graph-analyis/blob/main/fake_data.ipynb) that allow an analysis of tilt data using neo4j. 
+There are two Jupyter Notebooks [tilt_to_neo.ipynb](https://github.com/Transparency-Information-Language/tilt-graph-analyis/blob/main/tilt_to_neo4j.ipynb) and [synthetic data](https://github.com/Transparency-Information-Language/tilt-graph-analyis/blob/main/synthetic_data.ipynb) that allow an analysis of tilt data using neo4j. 
 
 The jupyter notebooks should be run top to bottom but especially the analysis cells can be modified and used for ones own analysis of the data. 
 
