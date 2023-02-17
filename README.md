@@ -32,9 +32,9 @@ match (m) detach delete m
 in the neo4j browser instance to delete all nodes and relationships in the graph.
 
 
-### [fake_data](https://github.com/Transparency-Information-Language/tilt-graph-analyis/blob/main/fake_data.ipynb)
+### [synthetic_data](https://github.com/Transparency-Information-Language/tilt-graph-analyis/blob/main/synthetic_data.ipynb)
 
-The file builds a data base of a fake tilt possessing a subsample of the structure of a full tilt graph. A number of analysis such as clustering and dynamic simulation are implemented. The fake data is generated using names of the Fortune 500 and can be hyperparamterized on a number of dimensions. 
+The file builds a data base of a synthetic tilt possessing a subsample of the structure of a full tilt graph. A number of analysis such as clustering and dynamic simulation are implemented. The synthetic data is generated using names of the Fortune 500 and can be hyperparamterized on a number of dimensions. 
 
 To use multiple neo4j instances at the same time, a neo4j Enterprise license is needed. To run the data science algorithms implemented in neo4j, the Graph Data Science (GDS) package and the apoc package should also be installed. 
 
