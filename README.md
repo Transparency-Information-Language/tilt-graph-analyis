@@ -1,9 +1,9 @@
-# Analysing the TILT Hub with Graph Data Science
+# TAP: A Platform for Cross-Provider Analysis of Transparency Information
 
-## Start
+Transparency and accountability are indispensable principles for modern data protection, from both, the legal and technical viewpoints. Regulations such as the GDPR therefore require specific transparency information to be provided including, e.g., purpose specifications, storage periods, or legal bases for personal data processing. However, it has repeatedly been shown that all too often, this information is practically hidden in legalese privacy policies, hindering data subjects from exercising their rights. This paper presents a novel approach to enable large-scale transparency information analysis across service providers, leveraging machine-readable formats and graph data science methods. More specifically, we propose a transparency analysis platform (TAP) that is used to empirically identify data transfers, provide evidence-based analyses of sharing-clusters of more than 70 real-world data controllers, or even to simulate network dynamics using synthetic transparency information for large-scale data-sharing scenarios. We provide a general approach for advanced transparency information analysis, an open source architecture and implementation in the form of a queryable analysis platform, and versatile analysis examples. These contributions pave the way for more transparent data processing for data subjects, and evidence-based enforcement processes for data protection authorities. Future work can build upon our contributions to gain more insights in so-far hidden data-sharing practices.
 
-This project is based on the GRANDstack Starter. To begin using it clone this repo and follow the instructions below and create the neo4j instance using [Docker](https://docs.docker.com/get-docker/). 
-The UI component of the app is deprecated and does not work. It can be ignored.
+
+## Setup
 
 You should be able to start your instance using: 
 ```
@@ -13,7 +13,7 @@ docker compose build --no-cache
 docker compose up
 ```
 
-Afterwards you can also access the instance through [neo4j Desktop](https://neo4j.com/download/).  
+Afterwards, you can also access the instance through [neo4j Desktop](https://neo4j.com/download/).  
 
 ## Content
 
