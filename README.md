@@ -5,7 +5,9 @@ Transparency and accountability are indispensable principles for modern data pro
 
 ## Setup
 
-You should be able to start your instance using: 
+
+
+If you have docker installed and running, you should be able to start your instance using: 
 ```
 docker compose build --no-cache
 ```
